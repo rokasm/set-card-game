@@ -9,39 +9,58 @@
 import SwiftUI
 
 class ShapesSetGame: ObservableObject {
-    typealias setGameType = SetGame<Colors, Shapes, Fills, NumbersOfShapes>
+    typealias setGameType = SetGame<Color, Shape, Fill, NumberOfShapes>
     @Published private var model: setGameType = ShapesSetGame.createGame()
-
+    
     static func createGame() -> setGameType {
-                
-        return setGameType(colors: Colors.allCases, shapes: Shapes.allCases, fills: Fills.allCases, numbersOfShapes: NumbersOfShapes.allCases)
+        
+        func getColor(index: Int) -> Color {
+           return Color.allCases[index]
+        }
+        
+        func getShape(index: Int) -> Shape {
+            return Shape.allCases[index]
+        }
+        
+        func getFill(index: Int) -> Fill {
+            return Fill.allCases[index]
+        }
+        
+        func getNumberOfShapes(index: Int) -> NumberOfShapes {
+            return NumberOfShapes.allCases[index]
+        }
+        
+        return setGameType(colors: getColor, shapes: getShape, fills: getFill, numbersOfShapes: getNumberOfShapes)
         
     }
     
-    enum Colors: CaseIterable {
-        case blue
-        case red
-        case orange
+    enum Color: String, Hashable, CaseIterable {
+        case blue = "blue"
+        case red = "red"
+        case orange = "orange"
     }
     
-       enum Shapes: CaseIterable {
-        case rectangle, diamond, circle
-    }
-       
-       enum Fills: CaseIterable {
-           case solid, shaded, outlined
-    }
-       
-       enum NumbersOfShapes: Int, CaseIterable {
-           case one = 1, two, three
+    enum Shape: String, CaseIterable, Hashable {
+        case rectangle = "rectangle"
+        case diamond = "diamond"
+        case circle = "cirlce"
     }
     
-    var deck: Array<SetGame<Colors, Shapes, Fills, NumbersOfShapes>.Card> {
+    
+    enum Fill: CaseIterable {
+        case solid, shaded, outlined
+    }
+    
+    enum NumberOfShapes: Int, CaseIterable, Hashable {
+        case one = 1, two, three
+    }
+    
+    var deck: Array<setGameType.Card> {
         model.deck
     }
     
-    var cardsDealt: Array<setGameType.Card> {
-          model.cardsDealt
+    var dealtCards: Array<setGameType.Card> {
+        model.dealtCards
     }
     
     func chooseCard(card: setGameType.Card) {

@@ -13,7 +13,7 @@ struct ShapesSetGameView: View {
     
     var body: some View {
         VStack {
-            Grid(viewModel.cardsDealt) { card in
+            Grid(viewModel.dealtCards) { card in
                 CardView(card: card).onTapGesture {
                     self.viewModel.chooseCard(card: card)
                 }
@@ -23,15 +23,15 @@ struct ShapesSetGameView: View {
 }
 
 struct CardView: View {
-    var card: SetGame<ShapesSetGame.Colors, ShapesSetGame.Shapes, ShapesSetGame.Fills, ShapesSetGame.NumbersOfShapes>.Card
+    var card: SetGame<ShapesSetGame.Color, ShapesSetGame.Shape, ShapesSetGame.Fill, ShapesSetGame.NumberOfShapes>.Card
     
     var color : Color {
         switch card.color {
-        case .blue:
-            return Color("CardColor1")
-        case .red:
-            return Color("CardColor2")
         case .orange:
+            return Color("CardColor1")
+        case .blue:
+            return Color("CardColor2")
+        case .red:
             return Color("CardColor3")
         }
     }
@@ -42,34 +42,36 @@ struct CardView: View {
         }
     }
     
-    @ViewBuilder
     private func body(size: CGSize) -> some View {
         ZStack {
-            RoundedRectangle(cornerRadius: cornerRadius).fill(color)
+            RoundedRectangle(cornerRadius: cornerRadius).fill(Color("CardFill"))
+            RoundedRectangle(cornerRadius: cornerRadius).strokeBorder(color, lineWidth: 2)
             VStack {
                 ForEach(0..<card.numberOfShapes.rawValue) {_ in
-                    self.drawShapes()
-                }.frame(width: 10, height: 10)
+                    self.drawShapes().padding(2)
+                }.frame(width: 25, height: 25)
             }
-        }.font(Font.system(size: fontSize(for: size))).padding(cardPadding)
+        }
+        .font(Font.system(size: fontSize(for: size)))
+        .padding(self.card.isSelected ? 2 : cardPadding)
     }
     
     @ViewBuilder
     func drawShapes() -> some View {
         if self.card.shape == .diamond {
-            Diamond()
+            Diamond().fill(color)
         }
         if self.card.shape == .rectangle {
-            Rectangle()
+            Rectangle().fill(color)
         }
         if self.card.shape == .circle {
-            Circle()
+            Circle().fill(color)
         }
     }
     
     
-    private let cornerRadius: CGFloat = 10
-    private let cardPadding: CGFloat = 3
+    private let cornerRadius: CGFloat = 15
+    private let cardPadding: CGFloat = 10
     private func fontSize(for size: CGSize) -> CGFloat {
         min(size.width, size.height) * 0.75
     }
