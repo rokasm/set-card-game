@@ -46,7 +46,6 @@ class ShapesSetGame: ObservableObject {
         case circle = "cirlce"
     }
     
-    
     enum Fill: CaseIterable {
         case solid, shaded, outlined
     }
@@ -55,15 +54,27 @@ class ShapesSetGame: ObservableObject {
         case one = 1, two, three
     }
     
-    var deck: Array<setGameType.Card> {
+    var deck: [setGameType.Card] {
         model.deck
     }
     
-    var dealtCards: Array<setGameType.Card> {
+    var dealtCards: [setGameType.Card] {
         model.dealtCards
     }
     
     func chooseCard(card: setGameType.Card) {
         model.chooseCard(card: card)
+    }
+    
+    var state: setGameType.State {
+        model.state
+    }
+    
+    func dealCards(count: Int) {
+        model.dealCards(count: count)
+    }
+    
+    func newGame() {
+       model = ShapesSetGame.createGame()
     }
 }
