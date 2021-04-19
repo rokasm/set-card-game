@@ -42,12 +42,12 @@ class ShapesSetGame: ObservableObject {
     
     enum Shape: String, CaseIterable, Hashable {
         case rectangle = "rectangle"
-        case diamond = "diamond"
+        case squiggle = "squiggle"
         case circle = "cirlce"
     }
     
     enum Fill: CaseIterable {
-        case solid, shaded, outlined
+        case solid, striped, outlined
     }
     
     enum NumberOfShapes: Int, CaseIterable, Hashable {

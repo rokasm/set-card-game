@@ -23,15 +23,37 @@ struct ShapesSetGameView: View {
     }
     
     var body: some View {
-        VStack {
-            Text(status)
-            Grid(viewModel.dealtCards) { card in
-                CardView(card: card).onTapGesture {
-                    self.viewModel.chooseCard(card: card)
+        ZStack {
+            Rectangle()
+                .fill( LinearGradient(gradient: Gradient(colors: [Color("Background1"), Color("Background2")]), startPoint: .topTrailing, endPoint: .bottomLeading))
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                Text(status)
+                    .font(.system(.largeTitle, design: .rounded))
+                    .fontWeight(.black)
+                    .foregroundColor(Color("TextColorTitle1"))
+                Grid(viewModel.dealtCards) { card in
+                    CardView(card: card).onTapGesture {
+                        self.viewModel.chooseCard(card: card)
+                    }
                 }
+                HStack {
+                    Button(action: {viewModel.dealCards(count: 3)}) {
+                        Text("Deal 3 More Cards")
+                            .font(.system(size: 21, design: .rounded))
+                            .fontWeight(.bold)
+                            .foregroundColor(Color("TextColorTitle1"))
+                    }
+                    Spacer()
+                    Button(action: {viewModel.newGame()}) {
+                        Text("New Game")
+                            .font(.system(size: 21, design: .rounded))
+                            .fontWeight(.heavy)
+                            .foregroundColor(Color("TextColorTitle1"))
+                    }
+                }.padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                
             }
-            Button(action: {viewModel.dealCards(count: 3)}) { Text("Deal 3 More Cards")}
-            Button(action: {viewModel.newGame()}) { Text("New Game")}
         }
     }
 }

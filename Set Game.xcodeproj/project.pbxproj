@@ -10,6 +10,7 @@
 		E405B74626024057006C8746 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E405B74526024057006C8746 /* Grid.swift */; };
 		E405B7482602430C006C8746 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E405B7472602430C006C8746 /* GridLayout.swift */; };
 		E405B74A26025D8F006C8746 /* Array+Indentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E405B74926025D8F006C8746 /* Array+Indentifiable.swift */; };
+		E458AEF42626BBC800F77384 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E458AEF32626BBC800F77384 /* Color+Hex.swift */; };
 		E45C690126217C53009AF219 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C690026217C52009AF219 /* CardView.swift */; };
 		E48ABB0225F50D2E007C5719 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48ABB0125F50D2E007C5719 /* AppDelegate.swift */; };
 		E48ABB0425F50D2E007C5719 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48ABB0325F50D2E007C5719 /* SceneDelegate.swift */; };
@@ -19,13 +20,14 @@
 		E48ABB0E25F50D31007C5719 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E48ABB0C25F50D31007C5719 /* LaunchScreen.storyboard */; };
 		E48ABB1625F537D3007C5719 /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48ABB1525F537D3007C5719 /* SetGame.swift */; };
 		E48ABB1825F68E58007C5719 /* ShapesSetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48ABB1725F68E58007C5719 /* ShapesSetGame.swift */; };
-		E4E442422609402C0015A119 /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E442412609402C0015A119 /* Diamond.swift */; };
+		E4E442422609402C0015A119 /* Squiggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E442412609402C0015A119 /* Squiggle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E405B74526024057006C8746 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		E405B7472602430C006C8746 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		E405B74926025D8F006C8746 /* Array+Indentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Indentifiable.swift"; sourceTree = "<group>"; };
+		E458AEF32626BBC800F77384 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		E45C690026217C52009AF219 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		E48ABAFE25F50D2E007C5719 /* Set Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Set Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E48ABB0125F50D2E007C5719 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -37,7 +39,7 @@
 		E48ABB0F25F50D31007C5719 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E48ABB1525F537D3007C5719 /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
 		E48ABB1725F68E58007C5719 /* ShapesSetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapesSetGame.swift; sourceTree = "<group>"; };
-		E4E442412609402C0015A119 /* Diamond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
+		E4E442412609402C0015A119 /* Squiggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squiggle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,12 +80,13 @@
 				E405B74526024057006C8746 /* Grid.swift */,
 				E48ABB0125F50D2E007C5719 /* AppDelegate.swift */,
 				E48ABB0325F50D2E007C5719 /* SceneDelegate.swift */,
-				E4E442412609402C0015A119 /* Diamond.swift */,
+				E4E442412609402C0015A119 /* Squiggle.swift */,
 				E405B74926025D8F006C8746 /* Array+Indentifiable.swift */,
 				E48ABB0725F50D31007C5719 /* Assets.xcassets */,
 				E48ABB0C25F50D31007C5719 /* LaunchScreen.storyboard */,
 				E48ABB0F25F50D31007C5719 /* Info.plist */,
 				E48ABB0925F50D31007C5719 /* Preview Content */,
+				E458AEF32626BBC800F77384 /* Color+Hex.swift */,
 			);
 			path = "Set Game";
 			sourceTree = "<group>";
@@ -170,12 +173,13 @@
 				E48ABB0225F50D2E007C5719 /* AppDelegate.swift in Sources */,
 				E48ABB0425F50D2E007C5719 /* SceneDelegate.swift in Sources */,
 				E48ABB1625F537D3007C5719 /* SetGame.swift in Sources */,
-				E4E442422609402C0015A119 /* Diamond.swift in Sources */,
+				E4E442422609402C0015A119 /* Squiggle.swift in Sources */,
 				E45C690126217C53009AF219 /* CardView.swift in Sources */,
 				E48ABB1825F68E58007C5719 /* ShapesSetGame.swift in Sources */,
 				E405B74A26025D8F006C8746 /* Array+Indentifiable.swift in Sources */,
 				E48ABB0625F50D2E007C5719 /* ShapesSetGameView.swift in Sources */,
 				E405B7482602430C006C8746 /* GridLayout.swift in Sources */,
+				E458AEF42626BBC800F77384 /* Color+Hex.swift in Sources */,
 				E405B74626024057006C8746 /* Grid.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
