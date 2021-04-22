@@ -66,7 +66,7 @@ struct CardView: View {
         }
         .font(Font.system(size: fontSize(for: size)))
         .scaleEffect(self.card.isSelected ? selectedCardScale : 1)
-        .padding(EdgeInsets(top: cardPadding(for: size), leading: 0, bottom: 0, trailing: 0))
+        .padding(EdgeInsets(top: 0, leading: 0, bottom: cardPadding(for: size), trailing: 0))
         .frame(width: size.width, height: size.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }
     
@@ -113,7 +113,7 @@ struct CardView: View {
     private let reflectionOpacity: Double = 1
     
     private func cardShadow(for size: CGFloat) -> CGFloat {
-        size * 0.015
+        size * 0.01
     }
     private func cardShadowRadius(for size: CGFloat) -> CGFloat {
         size * 0.005

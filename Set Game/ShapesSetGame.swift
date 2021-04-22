@@ -76,5 +76,6 @@ class ShapesSetGame: ObservableObject {
     
     func newGame() {
        model = ShapesSetGame.createGame()
+        model.dealCards(count: 12)
     }
 }

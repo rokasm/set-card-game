@@ -39,7 +39,6 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
             }
         }
         deck.shuffle()
-        dealCards(count: 12)
     }
     
     mutating func dealCards(count: Int) {
@@ -96,7 +95,9 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
                 self.deck[selectedIndex].isSelected = false
             }
         }
-        dealCards(count: 3)
+        if dealtCards.count <= 12 {
+            dealCards(count: 3)
+        }
     }
     
     mutating func checkMatch() -> State {
