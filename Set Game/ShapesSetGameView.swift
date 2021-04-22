@@ -109,8 +109,7 @@ struct ShapesSetGameView: View {
             }
         }
         .onAppear() {
-                rulesPopUpVisible = false
-            viewModel.dealCards(count: 12)
+                rulesPopUpVisible = true
         }
     }
     
