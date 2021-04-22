@@ -14,14 +14,9 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
     private var shapesSet: [Shape]
     private var fillsSet: [Fill]
     private var numbersOfShapesSet: [NumberOfShapes]
-    
-    var selectedCards: [Card] {
-        get { self.deck.filter{ $0.isSelected && $0.isDealt } }
-    }
-    var dealtCards: [Card] {
-        get { self.deck.filter{ $0.isDealt} }
-    }
-    
+    var selectedCards: [Card] { self.deck.filter{ $0.isSelected && $0.isDealt }}
+    var dealtCards: [Card] { self.deck.filter{ $0.isDealt }}
+    var state: State
     
     init(colors: (Int) -> Color, shapes: (Int) -> Shape, fills: (Int) -> Fill, numbersOfShapes: (Int) -> NumberOfShapes) {
         deck = [Card]()
@@ -29,7 +24,7 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
         shapesSet = [Shape]()
         fillsSet = [Fill]()
         numbersOfShapesSet = [NumberOfShapes]()
-        
+        state = .selectCard
         for color in 0..<3 {
             colorsSet.append(colors(color))
             for shape in 0..<3 {
@@ -44,34 +39,50 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
             }
         }
         deck.shuffle()
-        dealCards(count: 12)
     }
     
     mutating func dealCards(count: Int) {
-        for card in 0..<count {
-            if !self.deck[card].isDealt {
-                self.deck[card].isDealt = true
-            } else {
-                continue
+        print("\(count)")
+        var cardsDealt = 0
+        let availableCards = deck.filter{!$0.isMatched && !$0.isDealt && !$0.isSelected}
+        for card in availableCards {
+            if let selectedIndex: Int = deck.firstIndex(matching: card) {
+                deck[selectedIndex].isDealt = true
+                cardsDealt += 1
+            }
+            if (cardsDealt >= count) {
+                break
             }
         }
     }
     
-    
     mutating func chooseCard(card: Card) {
-        print(card)
-       
+        
+        // reset selection if there is no match
+        if selectedCards.count == 3 && state == .noMatch {
+            state = .selectCard
+            if let firstIndex: Int = deck.firstIndex(matching: card) {
+                self.deck[firstIndex].isSelected = true
+                for card in selectedCards {
+                    if let firstIndex: Int = deck.firstIndex(matching: card) {
+                        self.deck[firstIndex].isSelected = false
+                    }
+                }
+            }
+        }
+        
         if let firstIndex: Int = deck.firstIndex(matching: card) {
             self.deck[firstIndex].isSelected.toggle()
         }
-
+        
         if selectedCards.count == 3 {
-            print("\(checkMatch())")
-            switch checkMatch() {
-            case .match:
+            if case .match = checkMatch() {
+                state = .match
                 completeSet()
-            case .noMatch:
-                unSelectCards()
+            }
+            
+            if case .noMatch = checkMatch() {
+                state = .noMatch
             }
         }
     }
@@ -80,16 +91,12 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
         for card in selectedCards {
             if let selectedIndex = deck.firstIndex(matching: card) {
                 self.deck[selectedIndex].isMatched = true
-                unSelectCards()
+                self.deck[selectedIndex].isDealt = false
+                self.deck[selectedIndex].isSelected = false
             }
         }
-    }
-    
-    mutating func unSelectCards() {
-        for card in selectedCards {
-            if let selectedIndex: Int = deck.firstIndex(matching: card) {
-                deck[selectedIndex].isSelected = false
-            }
+        if dealtCards.count <= 12 {
+            dealCards(count: 3)
         }
     }
     
@@ -98,7 +105,7 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
         var shapes: [Int] = []
         var fills: [Int] = []
         var numbersOfShapes: [Int] = []
-        func checkColor(parameter: [Color], item: Color) -> Int {
+        func checkColor(parameter: [Color], item: Color) -> Int? {
             switch item {
             case parameter[0]:
                 return 0
@@ -107,11 +114,11 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
             case parameter[2]:
                 return 2
             default:
-                return -1
+                return nil
             }
         }
         
-        func checkShape(parameter: [Shape], item: Shape) -> Int {
+        func checkShape(parameter: [Shape], item: Shape) -> Int? {
             switch item {
             case parameter[0]:
                 return 0
@@ -120,11 +127,11 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
             case parameter[2]:
                 return 2
             default:
-                return -1
+                return nil
             }
         }
         
-        func checkFill(parameter: [Fill], item: Fill) -> Int {
+        func checkFill(parameter: [Fill], item: Fill) -> Int? {
             switch item {
             case parameter[0]:
                 return 0
@@ -133,11 +140,11 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
             case parameter[2]:
                 return 2
             default:
-                return -1
+                return nil
             }
         }
         
-        func checkNumberOfShapes(parameter: [NumberOfShapes], item: NumberOfShapes) -> Int {
+        func checkNumberOfShapes(parameter: [NumberOfShapes], item: NumberOfShapes) -> Int? {
             switch item {
             case parameter[0]:
                 return 0
@@ -146,15 +153,15 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
             case parameter[2]:
                 return 2
             default:
-                return -1
+                return nil
             }
         }
         
         for card in selectedCards {
-            colors.append(checkColor(parameter: colorsSet, item: card.color))
-            shapes.append(checkShape(parameter: shapesSet, item: card.shape))
-            fills.append(checkFill(parameter: fillsSet, item: card.fill))
-            numbersOfShapes.append(checkNumberOfShapes(parameter: numbersOfShapesSet, item: card.numberOfShapes))
+            colors.append(checkColor(parameter: colorsSet, item: card.color) ?? 0)
+            shapes.append(checkShape(parameter: shapesSet, item: card.shape) ?? 0)
+            fills.append(checkFill(parameter: fillsSet, item: card.fill) ?? 0)
+            numbersOfShapes.append(checkNumberOfShapes(parameter: numbersOfShapesSet, item: card.numberOfShapes) ?? 0)
         }
         
         // returns the count of unique parameters
@@ -183,6 +190,6 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
     enum State {
         case match
         case noMatch
-        
+        case selectCard
     }
 }

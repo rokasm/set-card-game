@@ -42,28 +42,40 @@ class ShapesSetGame: ObservableObject {
     
     enum Shape: String, CaseIterable, Hashable {
         case rectangle = "rectangle"
-        case diamond = "diamond"
+        case squiggle = "squiggle"
         case circle = "cirlce"
     }
     
-    
     enum Fill: CaseIterable {
-        case solid, shaded, outlined
+        case solid, striped, outlined
     }
     
     enum NumberOfShapes: Int, CaseIterable, Hashable {
         case one = 1, two, three
     }
     
-    var deck: Array<setGameType.Card> {
+    var deck: [setGameType.Card] {
         model.deck
     }
     
-    var dealtCards: Array<setGameType.Card> {
+    var dealtCards: [setGameType.Card] {
         model.dealtCards
     }
     
     func chooseCard(card: setGameType.Card) {
         model.chooseCard(card: card)
+    }
+    
+    var state: setGameType.State {
+        model.state
+    }
+    
+    func dealCards(count: Int) {
+        model.dealCards(count: count)
+    }
+    
+    func newGame() {
+       model = ShapesSetGame.createGame()
+        model.dealCards(count: 12)
     }
 }
