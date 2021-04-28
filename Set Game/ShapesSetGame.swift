@@ -70,12 +70,21 @@ class ShapesSetGame: ObservableObject {
         model.state
     }
     
+    var score: Int {
+        model.score
+    }
+    
     func dealCards(count: Int) {
         model.dealCards(count: count)
     }
     
     func newGame() {
-       model = ShapesSetGame.createGame()
+        model = ShapesSetGame.createGame()
         model.dealCards(count: 12)
     }
+    
+    func deal3cards() {
+        model.deal3cards()
+    }
+    
 }

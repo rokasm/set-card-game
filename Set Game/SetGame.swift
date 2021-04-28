@@ -10,13 +10,17 @@ import Foundation
 
 struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShapes: Equatable> {
     private(set) var deck: [Card]
+    
     private var colorsSet: [Color]
     private var shapesSet: [Shape]
     private var fillsSet: [Fill]
     private var numbersOfShapesSet: [NumberOfShapes]
+    
     var selectedCards: [Card] { self.deck.filter{ $0.isSelected && $0.isDealt }}
     var dealtCards: [Card] { self.deck.filter{ $0.isDealt }}
+    
     var state: State
+    var score: Int
     
     init(colors: (Int) -> Color, shapes: (Int) -> Shape, fills: (Int) -> Fill, numbersOfShapes: (Int) -> NumberOfShapes) {
         deck = [Card]()
@@ -25,6 +29,8 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
         fillsSet = [Fill]()
         numbersOfShapesSet = [NumberOfShapes]()
         state = .selectCard
+        score = 0
+        
         for color in 0..<3 {
             colorsSet.append(colors(color))
             for shape in 0..<3 {
@@ -42,7 +48,6 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
     }
     
     mutating func dealCards(count: Int) {
-        print("\(count)")
         var cardsDealt = 0
         let availableCards = deck.filter{!$0.isMatched && !$0.isDealt && !$0.isSelected}
         for card in availableCards {
@@ -57,7 +62,6 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
     }
     
     mutating func chooseCard(card: Card) {
-        
         // reset selection if there is no match
         if selectedCards.count == 3 && state == .noMatch {
             state = .selectCard
@@ -98,6 +102,7 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
         if dealtCards.count <= 12 {
             dealCards(count: 3)
         }
+        score += 1
     }
     
     mutating func checkMatch() -> State {
@@ -175,6 +180,10 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
         return checkMatch(element: colors) && checkMatch(element: shapes) && checkMatch(element: fills) && checkMatch(element: numbersOfShapes) ? .match : .noMatch
     }
     
+    mutating func deal3cards() {
+        dealCards(count: 3)
+        score -= 1
+    }
     
     struct Card: Identifiable {
         var id: UUID
