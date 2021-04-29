@@ -44,7 +44,7 @@
 		<key>UIColorName</key>
 		<string>Background2</string>
 		<key>UIImageName</key>
-		<string></string>
+		<string>LaunchScreenImage</string>
 		<key>UIImageRespectsSafeAreaInsets</key>
 		<true/>
 	</dict>
@@ -57,8 +57,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

@@ -29,6 +29,7 @@ struct ShapesSetGameView: View {
                     .transition(.opacity)
                 Text("Score: \(viewModel.score)")
                     .font(.system(size: 21, design: .rounded))
+                    .foregroundColor(Color("TextDark"))
                 Grid(viewModel.dealtCards) { card in
                     CardView(card: card).transition(AnyTransition.offset(randomLocation())).onTapGesture {
                         withAnimation(Animation.easeInOut) {

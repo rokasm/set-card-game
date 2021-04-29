@@ -57,7 +57,7 @@ struct CardView: View {
                     endPoint: .topTrailing)
             )
             .aspectRatio(3/4, contentMode: .fit)
-            .shadow(color: Color.black.opacity(0.25), radius: card.isSelected ? cardShadowRadiusSelected(for: size.height) : cardShadowRadius(for: size.height), x: card.isSelected ? -cardShadowSelected(for: size.width) : -cardShadow(for: size.width), y: card.isSelected ? cardShadowSelected(for: size.height) : cardShadow(for: size.height))
+//            .shadow(color: Color.black.opacity(0.25), radius: card.isSelected ? cardShadowRadiusSelected(for: size.height) : cardShadowRadius(for: size.height), x: card.isSelected ? -cardShadowSelected(for: size.width) : -cardShadow(for: size.width), y: card.isSelected ? cardShadowSelected(for: size.height) : cardShadow(for: size.height))
             VStack {
                 ForEach(0..<card.numberOfShapes.rawValue) {_ in
                     self.drawShapes().padding(shapePadding(for: size)).frame(width: shapeSize(for: size), height: shapeSize(for: size))
