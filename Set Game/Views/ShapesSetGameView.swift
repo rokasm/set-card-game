@@ -32,38 +32,39 @@ struct ShapesSetGameView: View {
                     .foregroundColor(Color("TextDark"))
                 Grid(viewModel.dealtCards) { card in
                     CardView(card: card).transition(AnyTransition.offset(randomLocation())).onTapGesture {
-                        withAnimation(Animation.easeInOut) {
+                        withAnimation(baseAnimation) {
                             self.viewModel.chooseCard(card: card)
                         }
                     }
                 }
                 if !rulesPopUpVisible {
-                HStack {
+                    HStack {
                         Button(action: {
-                                withAnimation(baseAnimation){
-                                    viewModel.dealCards(count: 3) }}) {
+                            withAnimation(baseAnimation){
+                                viewModel.deal3cards()
+                            }
+                        }){
                             Text("Deal 3 More Cards")
                                 .font(.system(size: 21, design: .rounded))
                                 .fontWeight(.bold)
                                 .foregroundColor(Color("TextColorTitle1"))
                         }
-                 
-                    Spacer()
-                    Button(action: {
-                        withAnimation(baseAnimation){
-                            viewModel.newGame()
+                        Spacer()
+                        Button(action: {
+                            withAnimation(baseAnimation){
+                                viewModel.newGame()
+                            }
+                        }) {
+                            Text("New Game")
+                                .font(.system(size: 21, design: .rounded))
+                                .fontWeight(.heavy)
+                                .foregroundColor(Color("TextColorTitle1"))
                         }
-                    }) {
-                        Text("New Game")
-                            .font(.system(size: 21, design: .rounded))
-                            .fontWeight(.heavy)
-                            .foregroundColor(Color("TextColorTitle1"))
                     }
+                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                    .shadow(color: Color.black.opacity(0.25), radius: 0.1, x: -1 , y: 1)
+                    .transition(.opacity)
                 }
-                .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                .shadow(color: Color.black.opacity(0.25), radius: 0.1, x: -1 , y: 1)
-                .transition(.opacity)
-            }
             }
             if rulesPopUpVisible {
                 PopupView(rulesPopUpVisible: self.$rulesPopUpVisible, action: self.viewModel.newGame)
@@ -104,9 +105,9 @@ struct ShapesSetGameView: View {
             return 0
         }
     }
-    let baseAnimation: Animation = Animation.easeInOut.speed(0.5)
+    let baseAnimation: Animation = Animation.easeInOut.speed(0.2)
     func randomLocation() -> CGSize {
-        CGSize(width: Double.random(in: -500 ... 500), height: Double.random(in: -500 ... 500))
+        CGSize(width: Double.random(in: -1000 ... -400), height: Double.random(in: -1000 ... -400))
     }
 }
 
