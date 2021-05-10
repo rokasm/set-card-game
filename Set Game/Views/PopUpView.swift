@@ -57,7 +57,6 @@ struct PopupView: View {
                         }
                         
                     }
-//                    .padding(EdgeInsets(top: 0, leading: 50, bottom: 5, trailing: 50))
                     .font(.system(size: 18, design: .rounded))
                     .foregroundColor(Color("TextColorTitle1"))
                     .multilineTextAlignment(.center)
