@@ -47,18 +47,11 @@ struct CardView: View {
     
     private func body(size: CGSize) -> some View {
         ZStack {
-            Rectangle().fill(
-                LinearGradient(
-                    gradient: Gradient(stops: [
-                        .init(color: color, location: 0.5),
-                        .init(color: reflectionColor, location: 1),
-                    ]),
-                    startPoint: .bottomLeading,
-                    endPoint: .topTrailing)
-            )
+            Rectangle().fill(color)
             .aspectRatio(3/4, contentMode: .fit)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius(for: size), style: .continuous))
             .shadow(color: Color.black.opacity(0.25), radius: card.isSelected ? cardShadowRadiusSelected(for: size.height) : cardShadowRadius(for: size.height), x: card.isSelected ? -cardShadowSelected(for: size.width) : -cardShadow(for: size.width), y: card.isSelected ? cardShadowSelected(for: size.height) : cardShadow(for: size.height))
+                .padding(5)
             VStack {
                 ForEach(0..<card.numberOfShapes.rawValue) {_ in
                     self.drawShapes().padding(shapePadding(for: size)).frame(width: shapeSize(for: size), height: shapeSize(for: size))
@@ -110,7 +103,7 @@ struct CardView: View {
         max(size.width, size.height) * 0.2
     }
     private func shapePadding(for size: CGSize) -> CGFloat {
-        max(size.width, size.height) * 0.02
+        max(size.width, size.height) * 0.015
     }
     private let reflectionOpacity: Double = 1
     
