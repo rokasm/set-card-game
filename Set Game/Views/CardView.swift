@@ -48,21 +48,31 @@ struct CardView: View {
     private func body(size: CGSize) -> some View {
         ZStack {
             Rectangle().fill(color)
-            .aspectRatio(3/4, contentMode: .fit)
-            .clipShape(RoundedRectangle(cornerRadius: cornerRadius(for: size), style: .continuous))
-            .shadow(color: Color.black.opacity(0.25), radius: card.isSelected ? cardShadowRadiusSelected(for: size.height) : cardShadowRadius(for: size.height), x: card.isSelected ? -cardShadowSelected(for: size.width) : -cardShadow(for: size.width), y: card.isSelected ? cardShadowSelected(for: size.height) : cardShadow(for: size.height))
-                .padding(5)
+                .aspectRatio(3/4, contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: cornerRadius(for: size), style: .continuous))
+                .shadow(color: Color.black.opacity(0.25), radius: card.isSelected ? cardShadowRadiusSelected(for: size.height) : cardShadowRadius(for: size.height), x: card.isSelected ? -cardShadowSelected(for: size.width) : -cardShadow(for: size.width), y: card.isSelected ? cardShadowSelected(for: size.height) : cardShadow(for: size.height))
             VStack {
                 ForEach(0..<card.numberOfShapes.rawValue) {_ in
-                    self.drawShapes().padding(shapePadding(for: size)).frame(width: shapeSize(for: size), height: shapeSize(for: size))
+                    self.drawShapes()
+                        .padding(shapePadding(for: size))
+                        .frame(width: shapeSize(for: size), height: shapeSize(for: size))
                 }
             }
+            Rectangle().fill(LinearGradient(
+                                gradient: Gradient(stops: [
+                                    .init(color: Color.white.opacity(0), location: 0.5),
+                                    .init(color: reflectionColor, location: 1),
+                                ]),
+                                startPoint: .bottomLeading,
+                                endPoint: .topTrailing))
+                .aspectRatio(3/4, contentMode: .fit)
+                .clipShape(RoundedRectangle(cornerRadius: cornerRadius(for: size), style: .continuous))
         }
         .font(Font.system(size: fontSize(for: size)))
         .scaleEffect(self.card.isSelected ? selectedCardScale : 1)
         .padding(EdgeInsets(top: 0, leading: 0, bottom: cardPadding(for: size), trailing: 0))
         .frame(width: size.width, height: size.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-
+        
     }
     
     @ViewBuilder
@@ -100,10 +110,10 @@ struct CardView: View {
         max(size.width, size.height) * 0.75
     }
     private func shapeSize(for size: CGSize) -> CGFloat {
-        max(size.width, size.height) * 0.2
+        max(size.width, size.height) * 0.19
     }
     private func shapePadding(for size: CGSize) -> CGFloat {
-        max(size.width, size.height) * 0.015
+        max(size.width, size.height) * 0.02
     }
     private let reflectionOpacity: Double = 1
     
@@ -143,5 +153,5 @@ struct CardView: View {
                 gradient: Gradient(colors: [color1]), startPoint: .top, endPoint: .bottom)
         }
     }
-  
+    
 }

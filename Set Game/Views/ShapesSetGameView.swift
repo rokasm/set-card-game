@@ -10,8 +10,8 @@ import SwiftUI
 
 struct ShapesSetGameView: View {
     @ObservedObject var viewModel = ShapesSetGame()
-    @AppStorage("onboardingVisible") var onboardingVisible: Bool = false
-
+    @AppStorage(wrappedValue: false, "onboardingVisible") var onboardingVisible
+    
     var body: some View {
         ZStack {
             Rectangle().fill(
@@ -20,28 +20,45 @@ struct ShapesSetGameView: View {
                                startPoint: .topTrailing,
                                endPoint: .bottomLeading))
                 .edgesIgnoringSafeArea(.all)
-            VStack {
-                if !onboardingVisible {
-                    Text(status)
-                        .font(.system(size: 27, design: .rounded))
-                        .fontWeight(.black)
-                        .foregroundColor(Color("TextColorTitle1"))
-                        .shadow(color: Color.black.opacity(0.25), radius: 0.1, x: -1 , y: 1)
-                        .transition(.opacity)
-                    Text("Score: \(viewModel.score)")
-                        .font(.system(size: 21, design: .rounded))
-                        .foregroundColor(Color("TextDark"))
-                }
-                Grid(viewModel.dealtCards) { card in
-                    CardView(card: card)
-                        .transition(AnyTransition.offset(randomLocation()))
-                        .onTapGesture {
-                        withAnimation(cardChooseAnimation) {
-                            self.viewModel.chooseCard(card: card)
+                VStack {
+                    HStack() {
+                        Spacer()
+                            .frame(width: 50)
+                       VStack() {
+                            Text(status)
+                                .font(.system(size: 27, design: .rounded))
+                                .fontWeight(.black)
+                                .foregroundColor(Color("TextColorTitle1"))
+                                .shadow(color: Color.black.opacity(0.25), radius: 0.1, x: -1 , y: 1)
+                                .transition(.opacity)
+                            Text("Score: \(viewModel.score)")
+                                .font(.system(size: 21, design: .rounded))
+                                .foregroundColor(Color("TextDark"))
                         }
+                       .frame(maxWidth: .infinity)
+                        Button(action: {
+                            onboardingVisible.toggle()
+                        }) {
+                            Image(systemName: "questionmark.square.dashed")
+                                .font(.system(size: 36, design: .rounded))
+                                .foregroundColor(Color("TextColorTitle1").opacity(0.75))
+                                .shadow(color: Color.black.opacity(0.05), radius: 0.1, x: -1 , y: 1)
+                        }
+                        .frame(width: 36)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16))
+                        .sheet(isPresented: $onboardingVisible) {
+                            OnboardingView(action: self.viewModel.newGame)
+                                }
+                    }.frame(maxWidth: .infinity)
+                    Grid(viewModel.dealtCards) { card in
+                        CardView(card: card)
+                            .transition(AnyTransition.offset(randomLocation()))
+                            .onTapGesture {
+                                withAnimation(cardChooseAnimation) {
+                                    self.viewModel.chooseCard(card: card)
+                                }
+                            }
                     }
-                }
-                if !onboardingVisible {
                     HStack {
                         Button(action: {
                             withAnimation(baseAnimation){
@@ -69,13 +86,13 @@ struct ShapesSetGameView: View {
                     .shadow(color: Color.black.opacity(0.25), radius: 0.1, x: -1 , y: 1)
                     .transition(.opacity)
                 }
-            }
-            if onboardingVisible {
-                OnboardingView(action: self.viewModel.newGame)
-            }
         }
         .onAppear() {
-            onboardingVisible = true
+            if !onboardingVisible {
+                withAnimation(baseAnimation){
+                    viewModel.newGame()
+                }
+            }
         }
     }
     
