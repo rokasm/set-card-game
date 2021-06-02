@@ -15,11 +15,12 @@ struct TabItemView: View {
         VStack() {
             VStack {
                 Text(content.text)
-                    .font(.system(size: 21, design: .rounded))
+                    .font(.system(size: 24, design: .rounded))
                     .fontWeight(.semibold)
                     .foregroundColor(Color("TextColorTitle1"))
                     .multilineTextAlignment(.center)
                     .shadow(radius: 1, x: -1, y: 1)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 24, trailing: 0))
                 HStack() {
                     ForEach(content.cards) { card in
                         CardView(card: card)

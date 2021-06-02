@@ -9,28 +9,23 @@
 import Foundation
 
 struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShapes: Equatable> {
-    private(set) var deck: [Card]
+    private(set) var deck: [Card] = []
     
-    private var colorsSet: [Color]
-    private var shapesSet: [Shape]
-    private var fillsSet: [Fill]
-    private var numbersOfShapesSet: [NumberOfShapes]
+    private var colorsSet: [Color] = []
+    private var shapesSet: [Shape] = []
+    private var fillsSet: [Fill] = []
+    private var numbersOfShapesSet: [NumberOfShapes] = []
     
-    var selectedCards: [Card] { self.deck.filter{ $0.isSelected && $0.isDealt }}
-    var dealtCards: [Card] { self.deck.filter{ $0.isDealt }}
+    var selectedCards: [Card] { deck.filter{ $0.isSelected && $0.isDealt }}
+    var dealtCards: [Card] { deck.filter{ $0.isDealt }}
+    var availableCards: [Card] { deck.filter{!$0.isMatched && $0.isDealt}}
+    var undealtCards: [Card] { deck.filter{ !$0.isMatched && !$0.isDealt }}
     
-    var state: State
-    var score: Int
+    var state: State = .selectCard
+    var score: Int = 0
+    var combinations: [[Card]] = []
     
     init(colors: (Int) -> Color, shapes: (Int) -> Shape, fills: (Int) -> Fill, numbersOfShapes: (Int) -> NumberOfShapes) {
-        deck = [Card]()
-        colorsSet = [Color]()
-        shapesSet = [Shape]()
-        fillsSet = [Fill]()
-        numbersOfShapesSet = [NumberOfShapes]()
-        state = .selectCard
-        score = 0
-        
         for color in 0..<3 {
             colorsSet.append(colors(color))
             for shape in 0..<3 {
@@ -49,8 +44,11 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
     
     mutating func dealCards(count: Int) {
         var cardsDealt = 0
-        let availableCards = deck.filter{!$0.isMatched && !$0.isDealt && !$0.isSelected}
-        for card in availableCards {
+        if undealtCards.count == 0 {
+            state = .noMoreCards
+        }
+        
+        for card in undealtCards {
             if let selectedIndex: Int = deck.firstIndex(matching: card) {
                 deck[selectedIndex].isDealt = true
                 cardsDealt += 1
@@ -59,11 +57,12 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
                 break
             }
         }
+        
     }
     
     mutating func chooseCard(card: Card) {
         // reset selection if there is no match
-        if selectedCards.count == 3 && state == .noMatch {
+        if selectedCards.count == 3 && state == .noMatch || state == .match {
             state = .selectCard
             if let firstIndex: Int = deck.firstIndex(matching: card) {
                 self.deck[firstIndex].isSelected = true
@@ -80,12 +79,12 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
         }
         
         if selectedCards.count == 3 {
-            if case .match = checkMatch() {
+            if case .match = checkMatch(selectedCards: selectedCards) {
                 state = .match
                 completeSet()
             }
             
-            if case .noMatch = checkMatch() {
+            if case .noMatch = checkMatch(selectedCards: selectedCards) {
                 state = .noMatch
             }
         }
@@ -103,9 +102,26 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
             dealCards(count: 3)
         }
         score += 1
+        
+        if undealtCards.count == 0 && dealtCards.count < 13  {
+            combinations = []
+            checkCombinations(arr: dealtCards, n: dealtCards.count, r: 3)
+            var states = [State]()
+         
+            for combination in combinations {
+                let st = checkMatch(selectedCards: combination)
+             
+                if st == .match {
+                    states.append(st)
+                }
+            }
+            if states.count == 0 {
+                state = .gameOver
+            }
+        }
     }
     
-    mutating func checkMatch() -> State {
+    mutating func checkMatch(selectedCards: [Card]) -> State {
         var colors: [Int] = []
         var shapes: [Int] = []
         var fills: [Int] = []
@@ -182,8 +198,51 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
     
     mutating func deal3cards() {
         dealCards(count: 3)
-        score -= 1
+        if state != .gameOver && state != .noMoreCards {
+            score -= 1
+        }
     }
+    
+    mutating func combinationUtil(arr: [Card], n: Int, r: Int, index: Int, data: [Card], i: Int) {
+        var dataCont = data
+        // Current combination is ready to
+        // be printed, print it
+        if (index == r)
+        {
+            var combination: [Card] = []
+            for j in 0..<r {
+                combination.append(dataCont[j])
+            }
+            combinations.append(combination)
+            return;
+        }
+        // When no more elements are there
+        // to put in data[]
+        if (i >= n) {
+            return
+        }
+        // current is included, put next
+        // at next location
+        dataCont.insert(arr[i], at: index);
+        combinationUtil(arr: arr, n: n, r: r, index: index + 1, data: dataCont, i: i + 1);
+        
+        // current is excluded, replace
+        // it with next (Note that i+1
+        // is passed, but index is not
+        // changed)
+        combinationUtil(arr: arr, n: n, r: r, index: index, data: dataCont, i: i + 1);
+    }
+    
+    mutating func checkCombinations(arr: [Card], n: Int, r: Int)
+    {
+        // A temporary array to store all
+        // combination one by one
+        let data: [Card] = []
+        // Print all combination using
+        // temprary array 'data[]'
+        combinationUtil(arr: arr, n: n, r: r, index: 0, data: data, i: 0);
+    }
+    
     
     struct Card: Identifiable {
         var id: UUID
@@ -200,5 +259,7 @@ struct SetGame<Color: Equatable, Shape: Equatable, Fill: Equatable, NumberOfShap
         case match
         case noMatch
         case selectCard
+        case noMoreCards
+        case gameOver
     }
 }

@@ -18,7 +18,7 @@ struct OnboardingView : View {
         ZStack() {
             Rectangle().fill(
                 LinearGradient(gradient: Gradient(
-                                colors: [Color("Background1"), Color("Background2")]),
+                                colors: [Color("Background2"), Color("Background1")]),
                                startPoint: .topTrailing,
                                endPoint: .bottomLeading))
                 .edgesIgnoringSafeArea(.all)
@@ -26,12 +26,22 @@ struct OnboardingView : View {
                 TabView(selection: $selection) {
                     VStack {
                         Text("Choose 3 cards to make a set")
+                            .font(.system(size: 24, design: .rounded))
                             .fontWeight(.semibold)
                             .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0))
-                        Text("A Set is made when the 3 cards complete all these requirements")
+                        Text("A Set is made when all 3 cards complete these 4 requirements:")
+                            .font(.system(size: 24, design: .rounded))
                             .fontWeight(.semibold)
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 24, trailing: 0))
+                        Text("1. They all have the same color or have three different colors.")
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0))
+                        Text("2. They all have the same shape or have three different shapes.")
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0))
+                        Text("3. They all have the same number or have three different numbers of shapes")
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0))
+                        Text("4. They all have the same shading or have three different shadings.")
                     }
-                    .font(.system(size: 24, design: .rounded))
+                    .font(.system(size: 21, design: .rounded))
                     .foregroundColor(Color("TextColorTitle1"))
                     .multilineTextAlignment(.center)
                     .padding(EdgeInsets(top: 0, leading: 32, bottom: 0, trailing: 32))
@@ -39,33 +49,37 @@ struct OnboardingView : View {
                     .transition(.opacity)
                     .animation(/*@START_MENU_TOKEN@*/.easeIn/*@END_MENU_TOKEN@*/)
                     .tag(0)
-                    TabItemView(content:  TabData(text: "They all have the same or three different shapes", cards: [
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.blue, shape: ShapesSetGame.Shape.circle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.blue, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.blue, shape: ShapesSetGame.Shape.squiggle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one)
-                    ])).tag(1)
-                    TabItemView(content: TabData(text: "They all have the same or three different shadings", cards: [
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.orange, shape: ShapesSetGame.Shape.circle, fill: ShapesSetGame.Fill.striped, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.orange, shape: ShapesSetGame.Shape.circle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.orange, shape: ShapesSetGame.Shape.circle, fill: ShapesSetGame.Fill.outlined, numberOfShapes: ShapesSetGame.NumberOfShapes.one)
-                    ])).tag(2)
-                    
-                    TabItemView(content: TabData(text: "They all have the same or three different number of shapes", cards: [
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.red, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.red, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.two),
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.red, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.three)
-                    ])).tag(3)
-                    
-                    TabItemView(content: TabData(text: "They all have the same or three different colors", cards: [
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.red, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.blue, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
-                        SetGame.Card(id: UUID(), color: ShapesSetGame.Color.orange, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one)
-                    ])).tag(4)
-                    
+
+                    VStack {
+                        TabItemView(content:  TabData(text: "This is a set", cards: [
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.blue, shape: ShapesSetGame.Shape.circle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.blue, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.blue, shape: ShapesSetGame.Shape.squiggle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one)
+                        ]))
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 64, trailing: 0))
+                        TabItemView(content: TabData(text: "This is also a set", cards: [
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.red, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.blue, shape: ShapesSetGame.Shape.circle, fill: ShapesSetGame.Fill.striped, numberOfShapes: ShapesSetGame.NumberOfShapes.three),
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.orange, shape: ShapesSetGame.Shape.squiggle, fill: ShapesSetGame.Fill.outlined, numberOfShapes: ShapesSetGame.NumberOfShapes.two)
+                        ]))
+                    }.tag(1)
+                    VStack {
+                        TabItemView(content: TabData(text: "This is not a set", cards: [
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.red, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.blue, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.two),
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.red, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.three)
+                        ]))
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 64, trailing: 0))
+                        TabItemView(content: TabData(text: "This is also not a set", cards: [
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.red, shape: ShapesSetGame.Shape.rectangle, fill: ShapesSetGame.Fill.solid, numberOfShapes: ShapesSetGame.NumberOfShapes.one),
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.blue, shape: ShapesSetGame.Shape.circle, fill: ShapesSetGame.Fill.outlined, numberOfShapes: ShapesSetGame.NumberOfShapes.three),
+                            SetGame.Card(id: UUID(), color: ShapesSetGame.Color.orange, shape: ShapesSetGame.Shape.squiggle, fill: ShapesSetGame.Fill.striped, numberOfShapes: ShapesSetGame.NumberOfShapes.three)
+                        ]))
+                    }.tag(2)
                 }
                 .tabViewStyle(PageTabViewStyle())
                 Button(action:  {
-                    if selection < 4 {
+                    if selection < 2 {
                         withAnimation() {
                             selection += 1
                         }
@@ -75,7 +89,7 @@ struct OnboardingView : View {
                         }
                     }
                 } ) {
-                    Text(selection < 4 ? "Next" : "Play")
+                    Text(selection < 2 ? "Next" : "Play")
                         .font(.system(size: 32, design: .rounded))
                         .fontWeight(.heavy)
                         .foregroundColor(Color("TextColorTitle1"))
