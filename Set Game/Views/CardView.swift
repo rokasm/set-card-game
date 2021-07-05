@@ -69,7 +69,7 @@ struct CardView: View {
         }
         .font(Font.system(size: fontSize(for: size)))
         .scaleEffect(self.card.isSelected ? selectedCardScale : 1)
-        .padding(EdgeInsets(top: 0, leading: 0, bottom: cardPadding(for: size), trailing: 0))
+        .padding(cardPadding(for: size))
         .frame(width: size.width, height: size.height, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
         
     }
@@ -103,7 +103,7 @@ struct CardView: View {
     private let selectedCardScale: CGFloat = 1.12
     
     private func cardPadding(for size: CGSize) -> CGFloat {
-        max(size.width, size.height) * 0.1
+        max(size.width, size.height) * 0.05
     }
     private func fontSize(for size: CGSize) -> CGFloat {
         max(size.width, size.height) * 0.75

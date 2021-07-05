@@ -69,7 +69,7 @@ struct ShapesSetGameView: View {
                         }
                     }
                     Spacer()
-                    AspectVGrid(items: viewModel.dealtCards, aspectRatio: 2/3, content: { card in
+                    AspectVGrid(items: viewModel.dealtCards, aspectRatio: 3/4, content: { card in
                         CardView(card: card)
                             .transition(AnyTransition.offset(randomLocation()))
                             .onTapGesture {
@@ -77,9 +77,8 @@ struct ShapesSetGameView: View {
                                     self.viewModel.chooseCard(card: card)
                                 }
                             }
-                            .padding(4)
                     })
-                    .padding(.horizontal, 15)
+                    .padding(.horizontal, 35)
                     Spacer()
                     HStack {
                         Button(action: {
