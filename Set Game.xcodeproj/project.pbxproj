@@ -10,6 +10,7 @@
 		E405B74626024057006C8746 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E405B74526024057006C8746 /* Grid.swift */; };
 		E405B7482602430C006C8746 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E405B7472602430C006C8746 /* GridLayout.swift */; };
 		E405B74A26025D8F006C8746 /* Array+Indentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E405B74926025D8F006C8746 /* Array+Indentifiable.swift */; };
+		E47E1C6126934CA800F66024 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47E1C6026934CA700F66024 /* AspectVGrid.swift */; };
 		E48ABB0225F50D2E007C5719 /* SetGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48ABB0125F50D2E007C5719 /* SetGameApp.swift */; };
 		E48ABB0825F50D31007C5719 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E48ABB0725F50D31007C5719 /* Assets.xcassets */; };
 		E48ABB0B25F50D31007C5719 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E48ABB0A25F50D31007C5719 /* Preview Assets.xcassets */; };
@@ -26,6 +27,7 @@
 		E405B74526024057006C8746 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		E405B7472602430C006C8746 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		E405B74926025D8F006C8746 /* Array+Indentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Indentifiable.swift"; sourceTree = "<group>"; };
+		E47E1C6026934CA700F66024 /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
 		E48ABAFE25F50D2E007C5719 /* Set Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Set Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E48ABB0125F50D2E007C5719 /* SetGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameApp.swift; sourceTree = "<group>"; };
 		E48ABB0725F50D31007C5719 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				E4A7CE70264BC6A2002AF5C6 /* Onboarding */,
 				E4A7CE5926492F46002AF5C6 /* CardView.swift */,
 				E4A7CE5B26492F46002AF5C6 /* ShapesSetGameView.swift */,
+				E47E1C6026934CA700F66024 /* AspectVGrid.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				E4A7CE5E26492F46002AF5C6 /* ShapesSetGameView.swift in Sources */,
 				E48ABB1825F68E58007C5719 /* ShapesSetGame.swift in Sources */,
 				E405B74A26025D8F006C8746 /* Array+Indentifiable.swift in Sources */,
+				E47E1C6126934CA800F66024 /* AspectVGrid.swift in Sources */,
 				E405B7482602430C006C8746 /* GridLayout.swift in Sources */,
 				E4A7CE72264BC6D3002AF5C6 /* TabItemView.swift in Sources */,
 				E405B74626024057006C8746 /* Grid.swift in Sources */,
@@ -328,7 +332,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "kb.Set-Game";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -349,7 +353,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "kb.Set-Game";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -48,9 +48,17 @@ struct CardView: View {
     private func body(size: CGSize) -> some View {
         ZStack {
             Rectangle().fill(color)
-                .aspectRatio(3/4, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius(for: size), style: .continuous))
                 .shadow(color: Color.black.opacity(0.25), radius: card.isSelected ? cardShadowRadiusSelected(for: size.height) : cardShadowRadius(for: size.height), x: card.isSelected ? -cardShadowSelected(for: size.width) : -cardShadow(for: size.width), y: card.isSelected ? cardShadowSelected(for: size.height) : cardShadow(for: size.height))
+           
+            Rectangle().fill(LinearGradient(
+                                gradient: Gradient(stops: [
+                                    .init(color: color, location: 0.1),
+                                    .init(color: reflectionColor, location: 1),
+                                ]),
+                                startPoint: .bottomLeading,
+                                endPoint: .topTrailing))
+                .clipShape(RoundedRectangle(cornerRadius: cornerRadius(for: size), style: .continuous))
             VStack {
                 ForEach(0..<card.numberOfShapes.rawValue) {_ in
                     self.drawShapes()
@@ -58,15 +66,6 @@ struct CardView: View {
                         .frame(width: shapeSize(for: size), height: shapeSize(for: size))
                 }
             }
-            Rectangle().fill(LinearGradient(
-                                gradient: Gradient(stops: [
-                                    .init(color: Color.white.opacity(0), location: 0.5),
-                                    .init(color: reflectionColor, location: 1),
-                                ]),
-                                startPoint: .bottomLeading,
-                                endPoint: .topTrailing))
-                .aspectRatio(3/4, contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: cornerRadius(for: size), style: .continuous))
         }
         .font(Font.system(size: fontSize(for: size)))
         .scaleEffect(self.card.isSelected ? selectedCardScale : 1)
@@ -101,7 +100,7 @@ struct CardView: View {
     private func cornerRadius(for size: CGSize) -> CGFloat {
         max(size.width, size.height) * 0.1
     }
-    private let selectedCardScale: CGFloat = 1.1
+    private let selectedCardScale: CGFloat = 1.12
     
     private func cardPadding(for size: CGSize) -> CGFloat {
         max(size.width, size.height) * 0.1
@@ -124,7 +123,7 @@ struct CardView: View {
         size * 0.005
     }
     private func cardShadowSelected(for size: CGFloat) -> CGFloat {
-        size * 0.12
+        size * 0.18
     }
     private func cardShadowRadiusSelected(for size: CGFloat) -> CGFloat {
         size * 0.04

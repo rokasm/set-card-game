@@ -17,6 +17,7 @@ struct ShapesSetGameView: View {
         get { score }
         set { score = newValue }
     }
+        
     var body: some View {
         let score: Int = viewModel.score
         ZStack {
@@ -30,7 +31,7 @@ struct ShapesSetGameView: View {
                 VStack {
                     HStack() {
                         Spacer()
-                            .frame(width: 36)
+                            .frame(width: 50)
                         VStack() {
                             Text(status)
                                 .font(.system(size: 27, design: .rounded))
@@ -40,6 +41,7 @@ struct ShapesSetGameView: View {
                                 .id("id" + status)
                                 .transition(.slide)
                                 .frame(width: geometry.size.width - 36 - 36 - 32)
+                                .padding(.top, 10)
                             HStack {
                                 Text("Score: ")
                                     .font(.system(size: 21, design: .rounded))
@@ -63,11 +65,11 @@ struct ShapesSetGameView: View {
                         .frame(width: 36)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16))
                         .sheet(isPresented: $onboardingVisible) {
-                            OnboardingView(action: self.viewModel.newGame)
+                            OnboardingView(action: viewModel.newGame)
                         }
                     }
-                    
-                    Grid(viewModel.dealtCards) { card in
+                    Spacer()
+                    AspectVGrid(items: viewModel.dealtCards, aspectRatio: 2/3, content: { card in
                         CardView(card: card)
                             .transition(AnyTransition.offset(randomLocation()))
                             .onTapGesture {
@@ -75,7 +77,10 @@ struct ShapesSetGameView: View {
                                     self.viewModel.chooseCard(card: card)
                                 }
                             }
-                    }
+                            .padding(4)
+                    })
+                    .padding(.horizontal, 15)
+                    Spacer()
                     HStack {
                         Button(action: {
                             withAnimation(baseAnimation){
